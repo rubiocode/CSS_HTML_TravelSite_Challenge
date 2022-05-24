@@ -1,8 +1,205 @@
 /*
-COLORS:
-
-Light green: #7ed56f
-Medium green: #55c57a
-Dark green: #28b485
+resetting default browser css
 
 */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #777;
+    /*for entire body*/
+    padding: 30px;
+}
+
+.header {
+    height: 95vh;
+    background-image: linear-gradient(
+        to right bottom, 
+        rgba(var(--lightGreen), 0.8), 
+        rgba(var(--darkGreen), 0.8)), 
+        url('../img/hero.jpg');
+    background-size: cover;
+    /*makes it so the images stays the same on top as the screen resizes*/
+    background-position: top;
+    position: relative;
+    
+    /* top left marks first point of polygon. From there move clockwise (x,y) 
+    in percentages, px, or vh vw to clip the image...clipped region sets what part 
+    of an element should be shown whatever outside the clipped region is hidden
+    */
+    clip-path: polygon(0 0, 100% 0, 100% 75vh, 0 100%);
+}
+
+.logoContainer {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+
+.logo {
+    height: 35px;
+    /*by not specifiying the width the browser does it automatically for us*/
+}
+
+.textContainer {
+    position: absolute;
+    /*% off in relation the parent element*/
+    top: 40%;
+    left: 50%; 
+    /* absolute container is off to the side not centered
+    we need to use translate to shift box to the middle. 
+    Translate not in relation to parent element but the element itself. 
+    Makes container responsive to size
+    by iteself transform does nothing to the container*/
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.mainHeader {
+    color: var(--white);
+    text-transform: uppercase;
+
+    /*get rid of the final bounce side effect from animation*/
+    backface-visibility: hidden;
+    margin-bottom: 50px;
+}
+
+.headerOne {
+    display: block;
+    font-size: 60px;
+    font-weight: 400;
+    letter-spacing: 35px;
+
+    animation-name: moveInLeft;
+    animation-duration: 3s;
+    animation-timing-function: ease-out;
+}
+
+.headerTwo {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 17.4px;
+
+    /*shorthand*/
+    animation: moveInRight 4s ease-out;
+}
+
+.btn:link,
+.btn:visited {
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 15px 40px;
+    display: inline-block;
+    border-radius: 100px; 
+    /*initial state*/
+    transition: all 0.2s; 
+    position: relative;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /*(x,y, blurr, color)*/
+}
+
+/* when clicking the button*/
+.btn:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+}
+
+.btn::after{
+    content: "";
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    border-radius: 100px;
+    position: absolute;
+    top:0;
+    left: 0;
+    z-index: -1;
+    transition: all 0.4s;
+}
+
+.btn:hover::after {
+    transform: scaleX(1.4) scaleY(1.6);
+    opacity: 0;
+}
+
+.btnWhite {
+    background-color: var(--white);
+    color: var(--gray);
+}
+
+.btnWhite::after {
+    background-color: var(--white);
+}
+
+.btnAnimation {
+    animation: moveInBtn 0.5s ease-out 2s;
+    /*Let element retain the style of first keyframe*/
+    animation-fill-mode: backwards;
+}
+/* CSS ANIMATIONS: 
+transition vs keyframes
+
+keyframes whatever name. Then add frames. 0% beginning, 50% middle, 100% end
+
+to make keyframe work then use animation-name: whatever name. Needs also animation duration
+
+animation-delay: 3s
+animation-iteration-count (amount of times animation will occur): 3
+animation-timing-function: ease; ease-in, ease-out, ease-in-out, linear, step-start, step-end
+*/
+
+@keyframes moveInLeft {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+
+    80% {
+        transform: translateX(10px)
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInRight {
+    0% {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+
+    80% {
+        transform: translateX(-10px)
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
+
+@keyframes moveInBtn {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    100%{
+        opacity: 1;
+        transform: translate(0);
+    }
+}
